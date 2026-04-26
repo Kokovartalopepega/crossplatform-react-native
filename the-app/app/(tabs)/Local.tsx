@@ -20,7 +20,7 @@ export default function LoaclScreen() {
   const loadImages = async () => {
     try {
       setLoading(true);
-      const data = await DataService.getImages();
+      const data = await DataService.getLocalImages();
       setImages(data);
       setError(null);
     } catch (err) {
@@ -59,7 +59,7 @@ export default function LoaclScreen() {
       <FlatList
         data={images}
         renderItem={listItem}
-        keyExtractor={(item) => item.filename}
+        keyExtractor={(item) => item.data}
         contentContainerStyle={styles.list}
       />
     </View>
