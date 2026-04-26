@@ -19,18 +19,27 @@ export default function TabLayout() {
     }}
     >
       <Tabs.Screen
-        name="index"
+        name="upload"
         options={{
-          title: 'Home',
+          title: 'Upload',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+            <Ionicons name={focused ? 'add-circle' : 'add-outline'} color={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
-        name="about"
+        name="Local"
         options={{
-          title: 'About',
+          title: 'Local',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'folder' : 'folder-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="list"
+        options={{
+          title: 'List',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
           ),
