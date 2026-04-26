@@ -1,9 +1,10 @@
 import { Tabs } from 'expo-router';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { Platform, Image } from 'react-native';
 
 export default function TabLayout() {
+  const iosFolderIcon = require('@/assets/images/ios-folder-icon.png');
   return (
     <Tabs
       screenOptions={{
@@ -31,9 +32,26 @@ export default function TabLayout() {
         name="Local"
         options={{
           title: 'Local',
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'folder' : 'folder-outline'} color={color} size={24}/>
-          ),
+          tabBarIcon: ({ color, focused }) => 
+            Platform.OS === 'ios' ? (
+              <Image
+                source={iosFolderIcon}
+                style={{
+                  width: 24,
+                  height: 24,
+                  tintColor: color,
+                  opacity: focused ? 1 : 0.7,
+                }}
+                resizeMode="contain"
+              />
+            ) : (
+              <Ionicons
+                name={focused ? 'folder' : 'folder-outline'}
+                color={color}
+                size={24}
+              />
+            ),
+          
         }}
       />
       <Tabs.Screen
