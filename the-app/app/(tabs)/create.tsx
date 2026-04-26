@@ -13,7 +13,7 @@ import { DataService } from '@/services/DataService';
 
 const PlaceholderImage = require('@/assets/images/background-image.png');
 
-export default function Upload() {
+export default function Create() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [filename, setFilename] = useState<string>('');
 

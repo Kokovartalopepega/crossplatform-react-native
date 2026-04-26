@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, Pressable } from 'react-native';
 import { DataService, type ImageItem } from '@/services/DataService';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function LoaclScreen() {
   const [images, setImages] = useState<ImageItem[]>([]);
@@ -31,10 +32,19 @@ export default function LoaclScreen() {
     }
   };
 
+  const handleUploadImage = async (image: ImageItem) => {
+    const response = await DataService.uploadImage(image);
+    alert(`Image uploaded?: ${response}`)
+  }
+  
   const listItem = ({ item }: { item: ImageItem }) => (
     <View style={styles.imageContainer}>
-      <Image source={{ uri: item.data }} style={styles.image} resizeMode="cover" />
-      <Text style={styles.description}>{item.description}</Text>
+      <Pressable onPress={()=> handleUploadImage(item)}>
+        <MaterialIcons name="add" size={38} color="#25292e" />
+      </Pressable>
+        
+        <Image source={{ uri: item.data }} style={styles.image} resizeMode="cover" />
+        <Text style={styles.description}>{item.description}</Text>
     </View>
   );
 

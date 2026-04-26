@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pathlib import Path
 import base64
+import re
 
 app = FastAPI(
     title="the-app-api",
@@ -62,3 +63,22 @@ def list():
             })
     
     return {"images": images}
+
+@app.post("/upload")
+async def upload(request: Request):
+    body = await request.json()
+    filename = body.get("filename")
+    data_url = body.get("data")
+
+    # Extract base64 data from data URL
+    match = re.match(r"data:(image/\w+);base64,(.+)", data_url)
+    if not match:
+        return JSONResponse({"error": "Invalid data URL"}, status_code=400)
+    base64_data = match.group(2)
+
+    # Save the file
+    file_path = DATA_FOLDER / filename
+    with open(file_path, "wb") as f:
+        f.write(base64.b64decode(base64_data))
+
+    return {"message": "Image uploaded", "filename": filename}

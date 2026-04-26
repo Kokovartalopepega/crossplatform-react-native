@@ -1,5 +1,5 @@
 import {File, Directory, Paths} from 'expo-file-system'
-
+import * as FileSystem from 'expo-file-system/legacy';
 export interface ImageItem {
   filename: string;
   description: string;
@@ -13,6 +13,36 @@ export interface ImagesResponse {
 const API_BASE_URL = "http://10.0.2.2:8000";
 
 export const DataService = {
+
+    async uploadImage(image: ImageItem){
+        try {
+            const base64 = await FileSystem.readAsStringAsync(image.data, { encoding: FileSystem.EncodingType.Base64 });
+
+            const ext = image.filename.split('.').pop()?.toLowerCase() || 'jpg';
+            const mimeType = ext === 'png' ? 'image/png' : 'image/jpeg';
+
+            const payload = {
+                filename: image.filename,
+                description: image.description,
+                data: `data:${mimeType};base64,${base64}`,
+            };
+
+            const response = await fetch('http://10.0.2.2:8000/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Upload failed: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            throw error;
+        }
+    },
   
     async saveImageLocally(image: string, filename: string) {
         try {
@@ -23,7 +53,6 @@ export const DataService = {
             const destPath = new File(destDir, filename);
             const oldImage = new File(image);
             oldImage.copy(destPath);
-            console.log(oldImage, destDir, destPath)
             return destPath.uri;
         } catch (error) {
             console.error('Error saving image:', error);
@@ -41,7 +70,7 @@ export const DataService = {
             .map(file => {
                 const filename = file.uri.replace(/\/$/, '').split('/').pop() || '';
                 const name = filename.replace(/\.[^/.]+$/, '');
-                
+
                 //fuckass parsing to get description
                 const description = name.replace(/_/g, ' ').replace(/-/g, ' ')
                 .replace(/\b\w/g, c => c.toUpperCase());
@@ -51,9 +80,6 @@ export const DataService = {
                 description,
                 data: file.uri,
                 };
-            });
-            images.forEach(image => {
-                console.log(image.filename, image.data)
             });
             return images;
         } catch (error) {

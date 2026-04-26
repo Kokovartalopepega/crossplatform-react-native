@@ -19,9 +19,9 @@ export default function TabLayout() {
     }}
     >
       <Tabs.Screen
-        name="upload"
+        name="create"
         options={{
-          title: 'Upload',
+          title: 'Create',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'add-circle' : 'add-outline'} color={color} size={24} />
           ),

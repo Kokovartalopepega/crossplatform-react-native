@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native';
 import { DataService, type ImageItem } from '@/services/DataService';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function ListScreen() {
   const [images, setImages] = useState<ImageItem[]>([]);
