@@ -36,12 +36,15 @@ export default function LoaclScreen() {
     const response = await DataService.uploadImage(image);
     alert(`Image uploaded?: ${response}`)
   }
-  
+
   const listItem = ({ item }: { item: ImageItem }) => (
     <View style={styles.imageContainer}>
-      <Pressable onPress={()=> handleUploadImage(item)}>
-        <MaterialIcons name="add" size={38} color="#25292e" />
-      </Pressable>
+      <Pressable 
+      style={styles.uploadButton} 
+      onPress={() => handleUploadImage(item)}
+    >
+      <MaterialIcons name="add" size={38} color="#25292e" />
+    </Pressable>
         
         <Image source={{ uri: item.data }} style={styles.image} resizeMode="cover" />
         <Text style={styles.description}>{item.description}</Text>
@@ -95,6 +98,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
+  },
+  uploadButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#ffeaaf',
+    borderRadius: 20,
+    padding: 4,
+    zIndex: 1,
   },
   description: {
     color: '#fff',

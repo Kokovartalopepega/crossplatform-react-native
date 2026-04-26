@@ -1,14 +1,9 @@
-import { ImageSourcePropType, View, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, StyleSheet, TextInput, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
-import IconButton from '@/components/IconButton';
-import CircleButton from '@/components/CircleButton';
-import EmojiPicker from '@/components/EmojiPicker';
-import EmojiList from '@/components/EmojiList';
-import EmojiSticker from '@/components/EmojiSticker';
 import { DataService } from '@/services/DataService';
 
 const PlaceholderImage = require('@/assets/images/background-image.png');
@@ -77,11 +72,12 @@ export default function Create() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#e6b736',
     alignItems: 'center',
   },
   imageContainer: {
     flex: 1,
+    marginTop: 20
   },
   footerContainer: {
     flex: 1 / 2,
